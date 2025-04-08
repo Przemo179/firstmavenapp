@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Przemo179/maven-test.git'
+                git 'https://github.com/Przemo179/firstmavenapp.git'
             }
         }
 
