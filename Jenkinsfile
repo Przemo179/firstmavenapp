@@ -17,7 +17,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                bat 'mvn deploy -s ci/settings.xml'
+                bat 'mvn deploy -X'
             }
         }
     }
