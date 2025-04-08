@@ -1,0 +1,9 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+<servers>
+<server> 
+<id>github</id> 
+<username>Przemo179</username>
+<password>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</password>
+</server>
+</servers>
+</settings>
