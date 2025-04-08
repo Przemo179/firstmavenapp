@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3.9.9'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -10,7 +14,6 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Use 'sh' for Linux/macOS or 'bat' for Windows
                 bat 'mvn clean package'
             }
         }
