@@ -7,7 +7,8 @@ pipeline {
     }
 
     environment {
-        JAVA_HOME = tool name: 'jdk21', type: 'hudson.model.JDK'
+    RAW_JAVA_HOME = tool name: 'jdk21', type: 'hudson.model.JDK'
+        JAVA_HOME = "${env.RAW_JAVA_HOME}\\jdk-21.0.6"
         PATH = "${env.JAVA_HOME}\\bin;${env.PATH}"
     }
 
