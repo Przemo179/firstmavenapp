@@ -6,10 +6,16 @@ pipeline {
         jdk 'jdk21'
     }
 
-    environment {
-    RAW_JAVA_HOME = tool name: 'jdk21', type: 'hudson.model.JDK'
-        JAVA_HOME = "${env.RAW_JAVA_HOME}\\jdk-21.0.6"
-        PATH = "${env.JAVA_HOME}\\bin;${env.PATH}"
+    stages {
+        stage('Setup JAVA_HOME') {
+            steps {
+                script {
+                    def rawHome = tool name: 'jdk21', type: 'hudson.model.JDK'
+                    env.JAVA_HOME = "${rawHome}\\jdk-21.0.6"
+                    env.PATH = "${env.JAVA_HOME}\\bin;${env.PATH}"
+                }
+            }
+        }
     }
 
     stages {
