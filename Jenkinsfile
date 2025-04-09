@@ -27,7 +27,6 @@ pipeline {
             steps {
                 bat 'echo JAVA_HOME=%JAVA_HOME%'
                 bat 'java -version'
-                bat 'mvn -version'
                 bat 'mvn clean package'
             }
         }
