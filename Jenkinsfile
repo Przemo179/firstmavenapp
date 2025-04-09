@@ -6,16 +6,21 @@ pipeline {
         jdk 'jdk21'
     }
 
+    environment {
+        JAVA_HOME = 'C:\\ProgramData\\Jenkins\\.jenkins\\tools\\hudson.model.JDK\\jdk21'
+        PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\tools\\hudson.model.JDK\\jdk21\\bin;%PATH%'
+    }
+
     stages {
-        stage('Setup JAVA_HOME') {
-            steps {
-                script {
-                    def rawHome = tool name: 'jdk21', type: 'hudson.model.JDK'
-                    env.JAVA_HOME = "${rawHome}\\jdk-21.0.6"
-                    env.PATH = "${env.JAVA_HOME}\\bin;${env.PATH}"
-                }
-            }
-        }
+        // stage('Setup JAVA_HOME') {
+        //     steps {
+        //         script {
+        //             def rawHome = tool name: 'jdk21', type: 'hudson.model.JDK'
+        //             env.JAVA_HOME = "${rawHome}\\jdk-21.0.6"
+        //             env.PATH = "${env.JAVA_HOME}\\bin;${env.PATH}"
+        //         }
+        //     }
+        // }
 
         stage('Checkout') {
             steps {
