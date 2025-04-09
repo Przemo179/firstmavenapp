@@ -28,7 +28,6 @@ pipeline {
                     echo "Resolved MAVEN_HOME: ${env.MAVEN_HOME}"
                 }
             }
-        }
 
         stage('Checkout') {
             steps {
