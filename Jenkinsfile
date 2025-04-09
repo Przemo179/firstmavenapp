@@ -7,7 +7,8 @@ pipeline {
     }
 
     stages {
-          steps {
+        stage('Set JAVA_HOME and MAVEN_HOME') {
+            steps {
                 script {
                     // Dynamically resolve the correct JDK path
                     def baseJdkPath = tool name: 'jdk21', type: 'hudson.model.JDK'
@@ -15,19 +16,17 @@ pipeline {
                         it.isDirectory() && it.name.toLowerCase().startsWith("jdk")
                     }
                     def resolvedJdkPath = jdkSubdir != null ? jdkSubdir.absolutePath : baseJdkPath
-
                     // Dynamically resolve the correct Maven path
                     def baseMavenPath = tool name: 'maven_3.9.9', type: 'hudson.tasks.Maven_MavenInstallation'
-
                     // Set JAVA_HOME and MAVEN_HOME
                     env.JAVA_HOME = resolvedJdkPath
                     env.MAVEN_HOME = baseMavenPath
                     env.PATH = "${env.JAVA_HOME}\\bin;${env.MAVEN_HOME}\\bin;${env.PATH}"
-
                     echo "Resolved JAVA_HOME: ${env.JAVA_HOME}"
                     echo "Resolved MAVEN_HOME: ${env.MAVEN_HOME}"
                 }
             }
+        }
 
         stage('Checkout') {
             steps {
