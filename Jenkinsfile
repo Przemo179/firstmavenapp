@@ -6,6 +6,11 @@ pipeline {
         jdk 'jdk21'
     }
 
+    environment {
+        JAVA_HOME = tool name: 'jdk21', type: 'hudson.model.JDK'
+        PATH = "${env.JAVA_HOME}\\bin;${env.PATH}"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -15,9 +20,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Print JAVA_HOME and PATH set by Jenkins
-                bat 'echo JAVA_HOME=%JAVA_HOME%'  // Print JAVA_HOME to verify JDK is correctly set
-                bat 'echo PATH=%PATH%'  // Print PATH to verify Java and Maven are correctly added
+                bat 'echo JAVA_HOME=%JAVA_HOME%'
+                bat 'java -version'
+                bat 'mvn -version'
                 bat 'mvn clean package'
             }
         }
