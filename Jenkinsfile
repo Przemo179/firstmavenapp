@@ -6,21 +6,29 @@ pipeline {
         jdk 'jdk21'
     }
 
-    environment {
-        JAVA_HOME = 'C:\\ProgramData\\Jenkins\\.jenkins\\tools\\hudson.model.JDK\\jdk21'
-        PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\tools\\hudson.model.JDK\\jdk21\\bin;%PATH%'
-    }
-
     stages {
-        // stage('Setup JAVA_HOME') {
-        //     steps {
-        //         script {
-        //             def rawHome = tool name: 'jdk21', type: 'hudson.model.JDK'
-        //             env.JAVA_HOME = "${rawHome}\\jdk-21.0.6"
-        //             env.PATH = "${env.JAVA_HOME}\\bin;${env.PATH}"
-        //         }
-        //     }
-        // }
+          steps {
+                script {
+                    // Dynamically resolve the correct JDK path
+                    def baseJdkPath = tool name: 'jdk21', type: 'hudson.model.JDK'
+                    def jdkSubdir = new File(baseJdkPath).listFiles().find {
+                        it.isDirectory() && it.name.toLowerCase().startsWith("jdk")
+                    }
+                    def resolvedJdkPath = jdkSubdir != null ? jdkSubdir.absolutePath : baseJdkPath
+
+                    // Dynamically resolve the correct Maven path
+                    def baseMavenPath = tool name: 'maven_3.9.9', type: 'hudson.tasks.Maven_MavenInstallation'
+
+                    // Set JAVA_HOME and MAVEN_HOME
+                    env.JAVA_HOME = resolvedJdkPath
+                    env.MAVEN_HOME = baseMavenPath
+                    env.PATH = "${env.JAVA_HOME}\\bin;${env.MAVEN_HOME}\\bin;${env.PATH}"
+
+                    echo "Resolved JAVA_HOME: ${env.JAVA_HOME}"
+                    echo "Resolved MAVEN_HOME: ${env.MAVEN_HOME}"
+                }
+            }
+        }
 
         stage('Checkout') {
             steps {
